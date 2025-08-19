@@ -367,7 +367,63 @@ This is the most important step for sensitive information. Streamlit Cloud provi
 
 You can monitor the deployment process and any potential errors directly from the Streamlit Cloud dashboard. This streamlined process focuses purely on your Python code and configurations, removing the complexities associated with separate web servers and manual infrastructure management.
 
-## 9\. Future Logical Enhancements 💡📈
+## 9\. Managing Your Deployed App ⚙️
+
+# 
+
+Once your app is deployed on Streamlit Cloud, it runs continuously. Here's how to manage its state and update it:
+
+### App Running State 🏃‍♀️
+
+# 
+
+Your Streamlit app will **keep running 24/7** on Streamlit Cloud by default. This is one of the benefits of using a platform like Streamlit Cloud – it handles the server infrastructure for you. For a personal project on the free tier, it consumes minimal resources when idle and does not typically incur charges.
+
+### Shutting Down or Restarting 🛑
+
+# 
+
+You typically **do not need to explicitly shut down** your app for cost reasons on the free tier. However, if you ever needed to, or wanted to manually restart:
+
+1.  **Log in to Streamlit Cloud:** Go to [share.streamlit.io](https://share.streamlit.io/ "null") and navigate to "My apps".
+    
+2.  **Select Your App:** Find and click on your "Dungeon GPT Lite" app.
+    
+3.  **App Management Options:**
+    
+    *   **Restart/Rerun:** Look for a "Restart" or "Rerun" button/option. This will simply restart your app's process without a code update.
+        
+    *   **Deactivate:** To temporarily stop your app, you might find a "Deactivate" option. The app will no longer be accessible via its URL.
+        
+    *   **Delete:** To permanently remove your app, choose the "Delete" option.
+        
+
+### Reflecting Local Changes in Deployment 🚀
+
+# 
+
+Changes you make to your local Git repository (e.g., editing `streamlit_app.py` or `requirements.txt`) will **ONLY reflect in your deployed Streamlit Cloud app after you commit those changes to GitHub and Streamlit Cloud redeploys your app.**
+
+Here's the standard workflow:
+
+1.  **Develop Locally:** Make and test changes on your local machine.
+    
+2.  **Commit Changes:** Use `git commit -m "Your descriptive message"` to save your changes locally.
+    
+3.  **Push to GitHub:** Use `git push origin main` (or your deployment branch) to send your committed changes to your GitHub repository.
+    
+4.  **Automatic Redeployment:** Streamlit Cloud automatically detects the new commit on the configured branch. It will then:
+    
+    *   Pull the latest code from your GitHub repository.
+        
+    *   Reinstall any updated Python dependencies listed in `requirements.txt`.
+        
+    *   Restart your application with the new code. This process usually takes a few minutes, during which your app might briefly show a "Building" or "Updating" status.
+        
+
+Therefore, you do not need to manually trigger a restart on Streamlit Cloud every time you commit; pushing to GitHub will initiate the update process.
+
+## 10\. Future Logical Enhancements 💡📈
 
 # 
 
@@ -402,7 +458,7 @@ To make Dungeon GPT Streamlit even more robust, scalable, and resume-worthy in a
 *   **Monetization Strategy (Advanced):** Explore potential monetization avenues such as premium features (e.g., more AI tokens, exclusive story modes, advanced customization) or a subscription model, demonstrating business acumen alongside technical skill.
     
 
-## 10\. Contributing 🤝
+## 11\. Contributing 🤝
 
 # 
 
@@ -421,7 +477,7 @@ Contributions are welcome! If you'd like to contribute to Dungeon GPT Streamlit,
 6.  Open a Pull Request to the `main` branch of the original repository.
     
 
-## 11\. License 📄
+## 12\. License 📄
 
 # 
 
