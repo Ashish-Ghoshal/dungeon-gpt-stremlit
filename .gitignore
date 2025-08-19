@@ -1,0 +1,21 @@
+# .gitignore
+# Ignore virtual environments
+venv/
+.venv/
+env/
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore environment variables and Streamlit secrets for security
+.env
+.streamlit/secrets.toml
+
+# Ignore dataset or output directories if they're not part of the repo
+/data/
+/output/
+
+# Ignore Streamlit specific cache files
+.streamlit/cache/
