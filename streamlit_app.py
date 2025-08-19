@@ -43,27 +43,27 @@ def initialize_firebase():
     Initializes the Firebase Admin SDK.
     Returns a Firestore client instance if successful, otherwise None.
     """
-    print("Attempting to initialize Firebase Admin SDK...") # Logging
+    print("Attempting to initialize Firebase Admin SDK...") 
     if not firebase_admin._apps: # Check if Firebase app is already initialized
         try:
             if not FIREBASE_SERVICE_ACCOUNT_KEY:
                 st.error("Firebase Service Account Key not found. Please add it to Streamlit Secrets or your .env file.")
-                print("Error: FIREBASE_SERVICE_ACCOUNT_KEY is empty.") # Logging
+                print("Error: FIREBASE_SERVICE_ACCOUNT_KEY is empty.") 
                 return None
             
             # Parse the JSON string service account key into a Python dictionary
             cred_dict = json.loads(FIREBASE_SERVICE_ACCOUNT_KEY)
             cred = credentials.Certificate(cred_dict)
             firebase_admin.initialize_app(cred)
-            st.sidebar.success("Firebase Admin SDK initialized.") # Use sidebar for non-critical status
-            print("Firebase Admin SDK initialized successfully.") # Logging
+            st.sidebar.success("Firebase Admin SDK initialized.") 
+            print("Firebase Admin SDK initialized successfully.") 
             return firestore.client()
         except Exception as e:
             st.sidebar.error(f"Error initializing Firebase Admin SDK: {e}")
-            print(f"Firebase Init Error: {e}") # Logging
+            print(f"Firebase Init Error: {e}") 
             return None
     else:
-        print("Firebase Admin SDK already initialized.") # Logging
+        print("Firebase Admin SDK already initialized.")
         return firestore.client()
 
 db = initialize_firebase()
@@ -97,15 +97,15 @@ if GOOGLE_API_KEY:
         gemini_model_uncensored = generativeai.GenerativeModel('gemini-1.5-flash-latest', safety_settings=_UNCENSORED_SAFETY_SETTINGS)
         
         st.sidebar.success("Gemini API configured for both modes.")
-        print("Gemini API models initialized successfully.") # Logging
+        print("Gemini API models initialized successfully.") 
     except Exception as e:
         st.sidebar.error(f"Error configuring Gemini API: {e}. Check your API key.")
-        print(f"Gemini API Config Error: {e}") # Logging
+        print(f"Gemini API Config Error: {e}") 
         gemini_model_censored = None
         gemini_model_uncensored = None
 else:
     st.sidebar.warning("GOOGLE_API_KEY not set. AI generation will be disabled.")
-    print("Error: GOOGLE_API_KEY is missing.") # Logging
+    print("Error: GOOGLE_API_KEY is missing.") 
     gemini_model_censored = None
     gemini_model_uncensored = None
 
@@ -117,15 +117,15 @@ if "story_history" not in st.session_state:
 if "current_mode" not in st.session_state:
     st.session_state.current_mode = 'censored' # Default AI response mode
 if "temperature" not in st.session_state:
-    st.session_state.temperature = 0.7 # Default AI creativity level
+    st.session_state.temperature = 0.7 
 if "tone" not in st.session_state:
-    st.session_state.tone = "Fantasy" # Default story genre/tone
+    st.session_state.tone = "Fantasy" 
 if "user_id" not in st.session_state:
     # Generate a unique ID for this browser session.
     # This ID will be used as the document ID in Firestore for saving/loading data.
     st.session_state.user_id = str(uuid.uuid4())
     st.toast(f"New session started. Your user ID: {st.session_state.user_id[:8]}...")
-    print(f"New session user ID generated: {st.session_state.user_id}") # Logging
+    print(f"New session user ID generated: {st.session_state.user_id}") 
 
 
 # --- AI Inference Function (Gemini Only) ---
@@ -149,25 +149,25 @@ def generate_gemini_response(prompt: str, temperature: float, mode: str) -> str:
         selected_model = gemini_model_uncensored
     
     if not selected_model:
-        print(f"Error: selected_model for {mode} mode is None. Check Gemini API config.") # Logging
+        print(f"Error: selected_model for {mode} mode is None. Check Gemini API config.") 
         return f"Error: Gemini API for '{mode}' mode is not configured. Check your GOOGLE_API_KEY."
 
     try:
         generation_config = {"temperature": temperature}
-        print(f"Calling Gemini API for mode: {mode}, temperature: {temperature}") # Logging
-        print(f"Prompt sent (first 200 chars): {prompt[:200]}...") # Logging
+        print(f"Calling Gemini API for mode: {mode}, temperature: {temperature}") 
+        print(f"Prompt sent (first 200 chars): {prompt[:200]}...") 
         response = selected_model.generate_content(prompt, generation_config=generation_config)
         
         # Check if the response actually contains text content
         if response and hasattr(response, 'text') and response.text:
-            print(f"Gemini API call successful for {mode} mode.") # Logging
+            print(f"Gemini API call successful for {mode} mode.") 
             return response.text
         elif response and hasattr(response, 'prompt_feedback') and response.prompt_feedback:
             # Handle cases where content is blocked by safety settings
-            print(f"Gemini API call blocked for {mode} mode. Reason: {response.prompt_feedback.block_reason.name}") # Logging
+            print(f"Gemini API call blocked for {mode} mode. Reason: {response.prompt_feedback.block_reason.name}") 
             return f"AI response was blocked by safety settings. Reason: {response.prompt_feedback.block_reason.name}"
         else:
-            print(f"Gemini API returned empty/unreadable response for {mode} mode. Response: {response}") # Logging
+            print(f"Gemini API returned empty/unreadable response for {mode} mode. Response: {response}") 
             return "AI returned an empty or unreadable response."
 
     except Exception as e:
@@ -194,10 +194,10 @@ def save_story_to_firestore():
     Saves the current story history and AI settings to Firestore.
     Each user's current session is saved under a unique document ID.
     """
-    print(f"Attempting to save session for user: {st.session_state.user_id}") # Logging
+    print(f"Attempting to save session for user: {st.session_state.user_id}") 
     if not db or not st.session_state.user_id:
         st.warning("Cannot save: Firebase not initialized or user ID not available.")
-        print("Save failed: DB not initialized or User ID missing.") # Logging
+        print("Save failed: DB not initialized or User ID missing.") 
         return False
     try:
         # Defines the document path for the current user's session
@@ -215,21 +215,21 @@ def save_story_to_firestore():
         # Set the document, merging new data with existing data if the document already exists
         doc_ref.set(session_data, merge=True)
         st.success("Current session saved successfully to cloud! You can resume from here.")
-        print(f"Session saved successfully for user: {st.session_state.user_id}") # Logging
+        print(f"Session saved successfully for user: {st.session_state.user_id}") 
         return True
     except Exception as e:
         st.error(f"Error saving session: {e}")
-        print(f"Save session error: {e}") # Logging
+        print(f"Save session error: {e}") 
         return False
 
 def load_story_from_firestore():
     """
     Loads the story history and AI settings for the current user ID from Firestore.
     """
-    print(f"Attempting to load session for user: {st.session_state.user_id}") # Logging
+    print(f"Attempting to load session for user: {st.session_state.user_id}") 
     if not db or not st.session_state.user_id:
         st.warning("Cannot load: Firebase not initialized or user ID not available.")
-        print("Load failed: DB not initialized or User ID missing.") # Logging
+        print("Load failed: DB not initialized or User ID missing.") 
         return False
     try:
         doc_ref = db.collection('artifacts').document(APP_ID).collection('users').document(st.session_state.user_id).collection('stories').document('current_session_data')
@@ -243,22 +243,22 @@ def load_story_from_firestore():
             st.session_state.temperature = data.get("temperature", 0.7)
             st.session_state.tone = data.get("tone", "Fantasy")
             st.success("Session loaded successfully from cloud!")
-            print(f"Session loaded successfully for user: {st.session_state.user_id}") # Logging
+            print(f"Session loaded successfully for user: {st.session_state.user_id}") 
             return True
         else:
             st.info("No saved session found for this user ID.")
-            print(f"No saved session found for user: {st.session_state.user_id}") # Logging
+            print(f"No saved session found for user: {st.session_state.user_id}") 
             return False
     except Exception as e:
         st.error(f"Error loading session: {e}")
-        print(f"Load session error: {e}") # Logging
+        print(f"Load session error: {e}") 
         return False
 
 # --- Streamlit UI Layout ---
 
 st.set_page_config(
     page_title="Dungeon GPT Lite",
-    layout="wide", # Uses the full width of the browser
+    layout="wide", 
     initial_sidebar_state="expanded" # Sidebar expanded by default
 )
 
@@ -285,11 +285,11 @@ col_new, col_save, col_load, col_export, col_import = st.columns(5)
 with col_new:
     if st.button("New Story", use_container_width=True):
         st.session_state.story_history = [] # Clear history
-        st.session_state.current_mode = 'censored' # Reset to default
-        st.session_state.temperature = 0.7 # Reset to default
-        st.session_state.tone = "Fantasy" # Reset to default
+        st.session_state.current_mode = 'censored' 
+        st.session_state.temperature = 0.7 
+        st.session_state.tone = "Fantasy" 
         st.toast("Started a fresh new adventure!")
-        print("New story button clicked. Session state reset.") # Logging
+        print("New story button clicked. Session state reset.") 
         st.rerun() # Force Streamlit to re-render the app with cleared state
 
 with col_save:
@@ -326,10 +326,7 @@ with col_export:
         st.button("Export Story (JSON)", disabled=True, use_container_width=True) # Disable button if no history
 
 with col_import:
-    # --- IMPORTANT: BEGIN FIX FOR FILE UPLOADER RESET ISSUE ---
-    # Wrap the file_uploader and its processing logic in an st.form
-    # The clear_on_submit=True argument for st.form will automatically reset
-    # all widgets within the form when the form is submitted.
+    # Import functionality: Allow users to upload a JSON file to restore story history and settings
     with st.form(key="import_form", clear_on_submit=True):
         uploaded_file = st.file_uploader(
             "Import Story (JSON)", 
@@ -341,7 +338,7 @@ with col_import:
         submit_button = st.form_submit_button(label="Process Import")
 
         if submit_button and uploaded_file is not None:
-            print(f"File uploaded: {uploaded_file.name}, size: {uploaded_file.size} bytes") # Logging
+            print(f"File uploaded: {uploaded_file.name}, size: {uploaded_file.size} bytes") 
             try:
                 file_content = uploaded_file.read().decode("utf-8")
                 imported_data = json.loads(file_content) # Parse the JSON content
@@ -354,25 +351,25 @@ with col_import:
                     st.session_state.temperature = imported_data["settings"].get("temperature", st.session_state.temperature)
                     st.session_state.tone = imported_data["settings"].get("tone", st.session_state.tone)
                     st.success("Story and settings imported successfully!")
-                    print("Story and settings imported successfully.") # Logging
+                    print("Story and settings imported successfully.") 
                 else:
                     st.error("Invalid JSON format. Please upload a file with 'history' and 'settings' keys.")
-                    print("Import failed: Invalid JSON format.") # Logging
+                    print("Import failed: Invalid JSON format.") 
                 
                 # The file_uploader inside the form will be cleared automatically by clear_on_submit=True
                 # We still need a rerun to update the main chat display and settings outside the form.
                 st.rerun() 
             except json.JSONDecodeError:
                 st.error("Invalid JSON file. Please upload a valid JSON file.")
-                print("Import failed: JSONDecodeError - Invalid JSON file.") # Logging
+                print("Import failed: JSONDecodeError - Invalid JSON file.") 
             except Exception as e:
                 # Catching generic Exception here for broader error logging
                 st.error(f"Error importing story: {e}")
-                print(f"Import failed with unexpected error: {e}") # Logging
-    # --- IMPORTANT: END FIX FOR FILE UPLOADER RESET ISSUE ---
+                print(f"Import failed with unexpected error: {e}")
+   
 
 
-st.markdown("---") # Visual separator
+st.markdown("---") 
 
 # --- AI Settings Section ---
 st.subheader("AI Settings")
@@ -410,7 +407,7 @@ with settings_col3:
 # Display current settings for user clarity
 st.info(f"Current AI Mode: **{st.session_state.current_mode.capitalize()}** | Temperature: **{st.session_state.temperature}** | Tone: **{st.session_state.tone}**")
 
-st.markdown("---") # Visual separator
+st.markdown("---") 
 
 # --- Chat Display Area ---
 # This container will display all messages in the story history
@@ -427,7 +424,7 @@ user_prompt = st.chat_input("Type your action or prompt here...", key="chat_inpu
 if user_prompt:
     # Add the user's new message to the story history
     st.session_state.story_history.append({"sender": "user", "text": user_prompt})
-    print(f"User prompt received: {user_prompt}") # Logging
+    print(f"User prompt received: {user_prompt}") 
 
     # Prepare the full context for the AI, including tone/genre and recent history
     # The system prompt is prepended to guide the AI's role and tone
@@ -461,5 +458,5 @@ if user_prompt:
 # Display a welcome message only when the app first loads or a new story is started
 if not st.session_state.story_history:
     st.session_state.story_history.append({"sender": "ai", "text": "Welcome, adventurer! What quest shall we embark on today?"})
-    print("Initial welcome message displayed.") # Logging
-    st.rerun() # Rerun to ensure the welcome message is displayed immediately
+    print("Initial welcome message displayed.") 
+    st.rerun() 

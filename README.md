@@ -4,6 +4,12 @@
 
 Dungeon GPT Streamlit is a full-stack, web-based application designed for collaborative fantasy storytelling with generative AI. Built with Streamlit for a unified Python-based frontend and backend, it exclusively leverages the powerful Google Gemini API. This project simplifies AI deployment while offering a rich, persistent, and highly customizable interactive narrative experience.
 
+## Live Demo 🌐
+
+## 
+
+Experience Dungeon GPT Lite live at: [**https://dungeon-gpt-stremlit-zs3vlqnwvdzj2wyhhnxlsm.streamlit.app/**](https://dungeon-gpt-stremlit-zs3vlqnwvdzj2wyhhnxlsm.streamlit.app/ "null")
+
 ## 1\. Problem Addressed 💡
 
 # 
@@ -375,15 +381,17 @@ Once your app is deployed on Streamlit Cloud, it runs continuously. Here's how t
 
 ### App Running State 🏃‍♀️
 
-# 
+## 
 
 Your Streamlit app will **keep running 24/7** on Streamlit Cloud by default. This is one of the benefits of using a platform like Streamlit Cloud – it handles the server infrastructure for you. For a personal project on the free tier, it consumes minimal resources when idle and does not typically incur charges.
 
 ### Shutting Down or Restarting 🛑
 
-# 
+## 
 
-You typically **do not need to explicitly shut down** your app for cost reasons on the free tier. However, if you ever needed to, or wanted to manually restart:
+You typically **do not need to explicitly shut down** your app for cost reasons on the free tier. Your app will operate within the generous free quotas of Streamlit Cloud and Google Cloud (Gemini API, Firestore), and thus is highly unlikely to incur any charges.
+
+However, if you ever needed to, or wanted to manually restart:
 
 1.  **Log in to Streamlit Cloud:** Go to [share.streamlit.io](https://share.streamlit.io/ "null") and navigate to "My apps".
     
@@ -391,16 +399,17 @@ You typically **do not need to explicitly shut down** your app for cost reasons 
     
 3.  **App Management Options:**
     
-    *   **Restart/Rerun:** Look for a "Restart" or "Rerun" button/option. This will simply restart your app's process without a code update.
-        
-    *   **Deactivate:** To temporarily stop your app, you might find a "Deactivate" option. The app will no longer be accessible via its URL.
+    *   **Reboot:** As you correctly identified, this is the button you'll see. It will simply restart your app's process without a code update. This clears any in-memory state and re-executes your `streamlit_app.py` script from the beginning.
         
     *   **Delete:** To permanently remove your app, choose the "Delete" option.
         
+    
+    _(The term "Deactivate" is sometimes used generally, but "Reboot" is the specific action button you'll encounter for a running app on Streamlit Cloud's UI to restart it.)_
+    
 
 ### Reflecting Local Changes in Deployment 🚀
 
-# 
+## 
 
 Changes you make to your local Git repository (e.g., editing `streamlit_app.py` or `requirements.txt`) will **ONLY reflect in your deployed Streamlit Cloud app after you commit those changes to GitHub and Streamlit Cloud redeploys your app.**
 
