@@ -4,6 +4,37 @@
 
 Dungeon GPT Streamlit is a full-stack, web-based application designed for collaborative fantasy storytelling with generative AI. Built with Streamlit for a unified Python-based frontend and backend, it exclusively leverages the powerful Google Gemini API. This project simplifies AI deployment while offering a rich, persistent, and highly customizable interactive narrative experience.
 
+## Table of Contents
+
+* [Live Demo](#live-demo-🌐)
+* [1. Problem Addressed](#1-problem-addressed-💡)
+* [2. Key Features](#2-key-features-🚀)
+* [3. Technology Stack](#3-technology-stack-🛠️)
+* [4. File and Directory Structure](#4-file-and-directory-structure-📂)
+* [5. Local Setup Guide](#5-local-setup-guide-🖥️)
+    * [5.1. Project Initialization](#51-project-initialization)
+    * [5.2. Create and Activate Virtual Environment](#52-create-and-activate-virtual-environment)
+    * [5.3. Install Dependencies](#53-install-dependencies)
+    * [5.4. Obtain API Keys and Set Up a New Google Cloud Project](#54-obtain-api-keys-and-set-up-a-new-google-cloud-project-🔑)
+        * [5.4.1. Create a New Google Cloud Project:](#541-create-a-new-google-cloud-project)
+        * [5.4.2. Get Your Google Gemini API Key:](#542-get-your-google-gemini-api-key)
+        * [5.4.3. Enable Generative Language API for Your New Project:](#543-enable-generative-language-api-for-your-new-project)
+        * [5.4.4. Set Up Firebase within Your New Project and Obtain Service Account Key:](#544-set-up-firebase-within-your-new-project-and-obtain-service-account-key)
+    * [5.5. Configure Local Secrets (`.streamlit/secrets.toml`)](#55-configure-local-secrets-streamlitsecrets-toml)
+* [6. Execution (Local)](#6-execution-local-🏃‍♀️)
+* [7. How to Use the Program](#7-how-to-use-the-program-🎮)
+* [8. Deployment to Streamlit Cloud](#8-deployment-to-streamlit-cloud-☁️)
+    * [Step 1: Prepare Your GitHub Repository](#step-1-prepare-your-github-repository-🧑‍💻)
+    * [Step 2: Configure Secrets on Streamlit Cloud](#step-2-configure-secrets-on-streamlit-cloud-🔐)
+    * [Step 3: Deploy Your App!](#step-3-deploy-your-app-🎉)
+* [9. Managing Your Deployed App](#9-managing-your-deployed-app-⚙️)
+    * [App Running State](#app-running-state-🏃‍♀️)
+    * [Shutting Down or Restarting](#shutting-down-or-restarting-🛑)
+    * [Reflecting Local Changes in Deployment](#reflecting-local-changes-in-deployment-🚀)
+* [10. Future Enhancements & Development Roadmap](#10-future-enhancements--development-roadmap-💡📈)
+* [11. Contributing to the Project](#11-contributing-to-the-project-🤝)
+* [12. License](#12-license-📄)
+
 ## Live Demo 🌐
 
 ## 
@@ -432,7 +463,8 @@ Here's the standard workflow:
 
 Therefore, you do not need to manually trigger a restart on Streamlit Cloud every time you commit; pushing to GitHub will initiate the update process.
 
-## 10\. Future Logical Enhancements 💡📈
+## 10\. Future Enhancements & Development Roadmap 💡📈
+
 
 # 
 
