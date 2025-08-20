@@ -115,10 +115,13 @@ The project is structured as follows:
     │   └── secrets.toml  # For local testing of secrets (DO NOT COMMIT!)
     ├── .gitignore        # Specifies files/folders to ignore (e.g., .env, .streamlit/secrets.toml)
     ├── requirements.txt  # Python dependencies for your Streamlit app
-    └── streamlit_app.py  # Your main Streamlit application file (containing all logic)
+    ├── streamlit_app.py  # Your main Streamlit application file (containing all logic)
+    ├── screenshots/
+    │   └── *.png         # screenshots of program for README.md
+    └── README.md         # This file  
     
 
-_(Optionally, you can create a `screenshots/` directory for any screenshots if you add them to the README later.)_
+
 
 ## 5\. Local Setup Guide 🖥️
 
@@ -235,8 +238,7 @@ This key allows your Streamlit application (running on the server side) to secur
         # Firebase Service Account Key as a single-line JSON string.
         # Go to Firebase Console > Project settings > Service accounts > Generate new private key.
         # Open the downloaded JSON file, copy its content, and paste it here as a single string.
-        # Ensure any backslashes are properly escaped (e.g., \n becomes \\n) if manually editing,
-        # though usually direct pasting works well in text editors.
+        
         firebase_service_account_key = '''
         {
             "type": "service_account",
@@ -275,7 +277,6 @@ Once all the setup is complete, you can run your Streamlit application locally.
     This command will open your Dungeon GPT Streamlit application in your default web browser (usually at `http://localhost:8501`).
     
 
-Congratulations! You are now ready to embark on your Dungeon GPT adventure locally.
 
 ## 7\. How to Use the Program 🎮
 
@@ -283,7 +284,10 @@ Congratulations! You are now ready to embark on your Dungeon GPT adventure local
 
 Dungeon GPT Streamlit offers an intuitive chat interface for interactive storytelling.
 
-_(Image of Dungeon GPT Streamlit UI will go here once you have one from a successful deployment)_
+- Main Program UI
+![alt text](screenshots/dark_theme_deploy_layout.PNG)
+ - Active conversation 
+![alt text](screenshots/img1.PNG)
 
 Upon launching the application, you'll be presented with a clean, dark-themed chat interface.
 
@@ -316,7 +320,7 @@ Upon launching the application, you'll be presented with a clean, dark-themed ch
     *   **Import:** The **"Import"** file uploader enables you to upload a previously exported `.txt` file. This lets you resume an older story, or load a story shared by someone else, effectively managing multiple distinct story lines.
         
 
-The AI's responses will populate the chat history, and you can scroll through to review your adventure. Interpret the AI's results as narrative suggestions and challenges, guiding you through a unique story co-creation process.
+The AI's responses will populate the chat history, and you can scroll through to review your conversation. 
 
 ## 8\. Deployment to Streamlit Cloud ☁️
 
@@ -385,7 +389,7 @@ This is the most important step for sensitive information. Streamlit Cloud provi
         **Important Note on `firebase_service_account_key`:** When copying the `private_key` value from your JSON file, it might contain actual newline characters (`\n`). In Streamlit Cloud's secrets editor, you typically need to ensure this is either pasted as one continuous line or that any `\n` characters are explicitly escaped as `\\n` if you're pasting a multi-line string. The `'''` syntax in Python's `secrets.toml` handles multi-line, but in the Streamlit Cloud UI input, you might need to manually ensure all newlines within the private key itself are converted to `\\n`.
         
 
-#### Step 3: Deploy Your App! 🎉
+#### Step 3: Deploy Your App! 
 
 # 
 
@@ -524,4 +528,4 @@ Contributions are welcome! If you'd like to contribute to Dungeon GPT Streamlit,
 
 This project is licensed under the MIT License - see the `LICENSE` file for details.
 
-<p align="center">Made  by Ashish Ghoshal</p>
+<p align="center">Made by Ashish Ghoshal</p>
